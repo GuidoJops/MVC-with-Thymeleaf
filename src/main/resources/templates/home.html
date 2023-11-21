@@ -12,7 +12,7 @@ h1 {text-align: center;}
 	<div class="card">
 		<div class="card-body"
 		
-		><h1 class="text">Gestionar Sucursales</h1>
+		><h1 class="text">Branch Management</h1>
 		</div>
 	</div>
 
@@ -20,10 +20,10 @@ h1 {text-align: center;}
 		<div class="card">
 			<img src="/images/view.png" class="card-img-top" alt="" >
 			<div class="card-body">
-				<h5 class="card-title">Ver Sucursales</h5>
-				<p class="card-text">Visualiza todas las Sucursales disponibles.</p>
+				<h5 class="card-title">See Branches</h5>
+				<p class="card-text">View all available Branches.</p>
 				<div class=text-center>
-					<a th:href="@{/sucursal}"  href="#" class="btn btn-warning">Quiero!</a>
+					<a th:href="@{/branch}"  href="#" class="btn btn-warning">Go!</a>
 				</div>
 			
 			</div>
@@ -32,10 +32,10 @@ h1 {text-align: center;}
 		<div class="card">
 			<img src="/images/add.png" class="card-img-top" alt="">
 			<div class="card-body">
-				<h5 class="card-title">Agregar Sucursal</h5>
-				<p class="card-text">Agrega una Sucursal al sistema.</p>
+				<h5 class="card-title">Add Branch</h5>
+				<p class="card-text">Add Branch to the system.</p>
 				<div class=text-center>
-					<a th:href="@{/sucursal/add}" href="#" class="btn btn-primary">Quiero!</a>
+					<a th:href="@{/branch/add}" href="#" class="btn btn-primary">Go!</a>
 				</div>
 			</div>
 		</div>
@@ -43,13 +43,13 @@ h1 {text-align: center;}
 		<div class="card">
 			<img src="/images/search.png" class="card-img-top" alt="">
 			<div class="card-body">
-				<h5 class="card-title">Buscar Sucursal</h5>
-				<p class="card-text">Visualiza los datos de una Sucursal en concreto.</p>
+				<h5 class="card-title">Search Branch</h5>
+				<p class="card-text">View the data of a specific Branch.</p>
 
-				<form class="d-flex" th:action="@{/sucursal/search}" method="get">
-					<input class="form-control me-2" type="text" name="nombreOid"
-						placeholder="Ingresa el NOMBRE o ID de la Sucursal..." >
-					<button class="btn btn-outline-success" type="submit">Buscar</button>
+				<form class="d-flex" th:action="@{/branch/search}" method="get">
+					<input class="form-control me-2" type="text" name="nameOrId"
+						placeholder="Enter Branch ID or NAME..." >
+					<button class="btn btn-outline-success" type="submit">Search</button>
 			
 				</form>
 			</div>

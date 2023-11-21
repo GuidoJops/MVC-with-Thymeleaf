@@ -13,48 +13,48 @@ import java.io.InputStream;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import project.model.domain.Pais;
-import project.model.services.IPaisService;
+import project.model.domain.Country;
+import project.model.services.CountryService;
 
 @SpringBootApplication
 public class ThymeleafMvcApplication implements CommandLineRunner {
 
+	@Autowired
+	private CountryService countryService;
+
 	public static void main(String[] args) {
 		SpringApplication.run(ThymeleafMvcApplication.class, args);
 	}
-	
-	
-	@Autowired
-	private IPaisService paisService;
 
 	@Override
 	public void run(String... args) throws Exception {
 		
-		// Carga Paises a BD desde un Json File
-		System.out.println("----INICIALIZACION DE PAISES---\n");
+		// Load countries into DB from Json file
+		System.out.println("---COUNTRIES LOADER STARTED---\n");
 
 		ObjectMapper mapper = new ObjectMapper();
-		TypeReference<List<Pais>> typeReference = new TypeReference<List<Pais>>() {};
-		InputStream inputStream = TypeReference.class.getResourceAsStream("/json/paises.json");
+		TypeReference<List<Country>> typeReference = new TypeReference<List<Country>>() {};
+		InputStream inputStream = TypeReference.class.getResourceAsStream("/json/countries.json");
 		
-		//Verifica si los paises ya se cargaron previamente, sino los carga
-		if (paisService.listaPaises().size()==0) {
-			System.out.println("No se encontraron datos de Paises en el sistema.");
-			System.out.println("Recuperando datos de Paises.... ");
-			List<Pais> paises = mapper.readValue(inputStream, typeReference);
+		//Confirms whether the countries have been loaded before; if not, proceeds with the loading.
+		if (countryService.listCountries().size()==0) {
+			System.out.println("No Country data was found in the system.");
+			System.out.println("Recovering country data.... ");
+			List<Country> countries = mapper.readValue(inputStream, typeReference);
 			
-			//Ordena la Lista de Paises Alfabeticamente
-			Comparator<Pais> comparador= Comparator.comparing(Pais::getNombre);
-			List<Pais>listaOrdenada=paises.stream().sorted(comparador).collect(Collectors.toList());
+			//Sort the Countries
+			List<Country> listaOrdenada = countries.stream()
+					.sorted(Comparator.comparing(Country::getName))
+					.collect(Collectors.toList());
 
-			//Ingresa Lista de Paises a la BD
-			paisService.addMultiplePais(listaOrdenada);
+			//Enter List of Countries to the DB
+			countryService.addMultipleCountries(listaOrdenada);
 			
 		} else {
-			System.out.println("Paises inicializados previamente.");
+			System.out.println("Countries have been previously initialized");
 
 		}
-		System.out.println("\n----INICIALIZACION DE PAISES TERMINADA----");
+		System.out.println("\n---END OF COUNTRIES LOADER---");
 
 	};
 	

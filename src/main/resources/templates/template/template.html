@@ -5,7 +5,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="head">
 <meta charset="UTF-8">
-<title>Gestión Sucursales</title>
+<title>Branch Management</title>
 
 <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
@@ -26,17 +26,17 @@
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item active">
-						<a class="nav-link" th:href="@{/}" href="#">Inicio 
+						<a class="nav-link" th:href="@{/}" href="#">Home
 							<span class="sr-only">(current)</span>
 						</a>
 					</li>
 					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" th:href="@{/sucursal}" href="#" id="navbarDropdownMenuLink"
-					 	  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Sucursales</a>
+						<a class="nav-link dropdown-toggle" th:href="@{/branch}" href="#" id="navbarDropdownMenuLink"
+					 	  role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Branches</a>
 							<div class="dropdown-menu"
 								aria-labelledby="navbarDropdownMenuLink">
-								<a class="dropdown-item" th:href="@{/sucursal}" href="#">Ver Sucursales</a>
-								<a class="dropdown-item" th:href="@{/sucursal/add}" href="#">Agregar Sucursal</a>
+								<a class="dropdown-item" th:href="@{/branch}" href="#">See Branches</a>
+								<a class="dropdown-item" th:href="@{/branch/add}" href="#">Add Branch</a>
 
 						</div></li>
 				</ul>
@@ -74,9 +74,9 @@
 
 	<!-- FOOTER -->
 	<footer th:fragment="footer" class="bg-dark text-center text-white fixed-bottom">
-	<div class="container">
-	<p> Guido Janota 2023</p>
-	</div>
+		<div class="container d-flex align-items-center justify-content-center">
+			<p>Guido Janota 2023</p>
+		</div>
 
 		<script type="text/javascript" th:src="@{/js/jquery-3.3.1.slim.min.js}"></script>
 		<script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
