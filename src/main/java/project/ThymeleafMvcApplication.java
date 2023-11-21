@@ -17,10 +17,10 @@ import project.model.domain.Pais;
 import project.model.services.IPaisService;
 
 @SpringBootApplication
-public class S05T01N01JanotaFuenteGuidoApplication implements CommandLineRunner {
+public class ThymeleafMvcApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
-		SpringApplication.run(S05T01N01JanotaFuenteGuidoApplication.class, args);
+		SpringApplication.run(ThymeleafMvcApplication.class, args);
 	}
 	
 	
