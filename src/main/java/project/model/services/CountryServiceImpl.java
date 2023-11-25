@@ -14,28 +14,27 @@ import project.model.repository.CountryRepository;
 public class CountryServiceImpl implements CountryService {
 
 	@Autowired
-	private CountryRepository paisRepo;
+	private CountryRepository countryRepository;
 	
 	@Override
 	public List<Country> listCountries() {
-		return paisRepo.findAll();
+		return countryRepository.findAll();
 	}
 
 	@Override
 	public void addCountry(Country country) {
 		System.out.println("Country Added");
-		paisRepo.save(country);
-		
+		countryRepository.save(country);
 	}
 
 	@Override
 	public void deleteCountry(Long id) {
-		paisRepo.deleteById(id);
+		countryRepository.deleteById(id);
 	}
 
 	@Override
 	public void addMultipleCountries(List<Country> countries) {
-		paisRepo.saveAll(countries);
+		countryRepository.saveAll(countries);
 	}
 
 }

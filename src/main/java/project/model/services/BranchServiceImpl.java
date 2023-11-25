@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import project.mappers.BranchMapper;
+import project.model.domain.Branch;
 import project.model.dto.BranchDto;
 import project.model.repository.BranchRepository;
 
@@ -20,8 +21,7 @@ public class BranchServiceImpl implements BranchService {
 	
 	@Override
 	public List<BranchDto> getAllBranches() {
-		List<BranchDto> dto = branchMapper.entityToDto(branchRepository.findAll());
-		return dto;
+		return branchMapper.entityToDto(branchRepository.findAll());
 	}
 
 	@Override
@@ -35,16 +35,20 @@ public class BranchServiceImpl implements BranchService {
 	}
 
 	@Override
-	public void deleteBranchById(Long id) {
-		branchRepository.deleteById(id);
-
-	}
-
-	@Override
 	public BranchDto getOneBranchByName(String nombre) {
 		return branchMapper.entityToDto(branchRepository.findBybranchName(nombre));
 	}
 
-
+	@Override
+	public boolean deleteBranchById(Long id) {
+		Branch branch = branchRepository.findById(id).orElse(null);
+		if (branch == null) {
+			System.out.println("Branch not found");
+			return false;
+		}
+		branchRepository.deleteById(id);
+		System.out.println(branch.getBranchName() + " deleted");
+		return true;
+	}
 
 }

@@ -15,7 +15,7 @@ public interface BranchService {
 	
 	void saveBranch (BranchDto branchDto);
 	
-	void deleteBranchById (Long id);
+	boolean deleteBranchById (Long id);
 	
 	
 	

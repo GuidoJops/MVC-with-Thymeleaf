@@ -3,25 +3,23 @@ package project.model.dto;
 import java.util.Arrays;
 import java.util.List;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import project.model.domain.Country;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 
 @Getter
 @Setter
 public class BranchDto {
 	
-	private Long id; //chequear si es necesario
+	private Long id;
 	
-	@NotEmpty(message="The Branch name cannot be empty.")
-	@NotNull
+	@NotBlank(message = "Branch Name is required")
 	private String branchName;
 	
 	private Country countryBranch;
 	
-	private String branchType; ////chequear si se usa
+	private String branchType;
 	
 	private List<String> euCountries = Arrays.asList("Germany","Austria","Belgium","Bulgaria","Cyprus",
 			"Croatia","Denmark","Spain","Slovakia","Slovenia",

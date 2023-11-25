@@ -37,7 +37,7 @@
 							</a> 
 							<a type="button" th:href="@{/branch/delete/} + ${br.id}"
 								class="btn btn-danger btn-sm" th:text="Delete" title="Delete Branch"
-								onclick="return confirm('Branch will be deleted);">
+								onclick="return confirm('Branch will be deleted');">
 							</a>
 						</div>
 						
@@ -54,7 +54,9 @@
 	</div>
 
 
-	<footer th:replace="~{template/template :: footer}"></footer>
+	<!--
+        <footer th:replace="~{template/template :: footer}"></footer>
+    -->
 
 </body>
 </html>

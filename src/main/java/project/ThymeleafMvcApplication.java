@@ -37,21 +37,23 @@ public class ThymeleafMvcApplication implements CommandLineRunner {
 		InputStream inputStream = TypeReference.class.getResourceAsStream("/json/countries.json");
 		
 		//Confirms whether the countries have been loaded before; if not, proceeds with the loading.
-		if (countryService.listCountries().size()==0) {
+		if (countryService.listCountries().isEmpty()) {
 			System.out.println("No Country data was found in the system.");
 			System.out.println("Recovering country data.... ");
 			List<Country> countries = mapper.readValue(inputStream, typeReference);
 			
 			//Sort the Countries
-			List<Country> listaOrdenada = countries.stream()
+			List<Country> sortedCountries = countries.stream()
 					.sorted(Comparator.comparing(Country::getName))
 					.collect(Collectors.toList());
 
-			//Enter List of Countries to the DB
-			countryService.addMultipleCountries(listaOrdenada);
-			
+			//Insert List of Countries to the DB
+			countryService.addMultipleCountries(sortedCountries);
+			System.out.println("Done!");
+
+
 		} else {
-			System.out.println("Countries have been previously initialized");
+			System.out.println("We are GOOD! Countries have been previously initialized.");
 
 		}
 		System.out.println("\n---END OF COUNTRIES LOADER---");

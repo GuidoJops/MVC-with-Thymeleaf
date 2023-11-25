@@ -3,47 +3,40 @@
 <head th:replace="~{template/template :: head}">
 </head>
 <body>
-	<header th:replace="~{template/template :: header}"></header>
+<header th:replace="~{template/template :: header}"></header>
 
-	<div class="container">
-		<h1 th:text="${title}"></h1>
-	</div>
+<div class="container">
+    <h1 th:text="${title}"></h1>
+</div>
 
-	<div class="container p-3 my-3 bg-dark text-white">
-		<form th:action="@{/branch/save}" th:object="${branch}" method="post" >
-		
-			<div class="form-group">
-				<input type="hidden" th:field="*{id}">
-				<label for="branchName">Branch Name:</label>
-				<input type="text" th:field="*{branchName}" class="form-control"
-						placeholder="-Enter the Branch Name-">
-						<small class="form-text text-danger" th:if="${#fields.hasErrors('branchName')}"
-							   th:errors="*{branchName}">  <!-- NO FUNCIONA -->
-						</small>
-			</div>
-			
-				<div class="form-group">
-				<label for="countryBranch">Country:</label>
-				<select th:field="*{countryBranch}" class="form-control" id ="countryBranch" >
-				<option value=""> -Select Country- </option>
-				<option th:each="countryBranch:${countries}"
-						th:value="${countryBranch.id}"
-						th:text="${countryBranch.name}"
-				
-						/>
-				</select>
-			</div>
-				<button type="submit" class="btn btn-warning "th:text="${button}"></button>
-			
-		</form>
-		
-	</div>
-	
-	<div class="text-center">
-		<a class="btn btn-primary" th:href="@{/}">Back to Home</a>
-	</div>
+<div class="container p-3 my-3 bg-dark text-white">
+    <form th:action="@{/branch/save}" th:object="${branch}" method="post">
 
+		<input type="hidden" th:field="*{id}">
+		<label for="branchName">Branch Name:</label>
+		<input type="text" th:field="*{branchName}" class="form-control" placeholder="-Enter the Branch Name-">
+		<!--<small class="form-text text-danger" th:if="${#fields.hasErrors('branchName')}" th:errors="*{branchName}"> </small> -->
+
+		<label for="countryBranch">Country:</label>
+		<select th:field="*{countryBranch}" class="form-control" id="countryBranch">
+			<option value=""> -Select Country-</option>
+			<option th:each="countryBranch:${countries}"
+					th:value="${countryBranch.id}"
+					th:text="${countryBranch.name}"></option>
+		</select>
+		<button type="submit" class="btn btn-warning" th:text="${button}" style="margin-top: 20px;"></button>
+
+	</form>
+
+</div>
+
+<div class="text-center">
+    <a class="btn btn-primary" th:href="@{/}">Back to Home</a>
+</div>
+
+<!--
 	<footer th:replace="~{template/template :: footer}"></footer>
+-->
 
 </body>
 </html>
