@@ -3,7 +3,6 @@ package project.controllers;
 
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -94,7 +93,7 @@ public class BranchController {
 	public String saveBranch(@Valid @ModelAttribute BranchDto branchDto,
 								BindingResult result, Model model, RedirectAttributes msg ) {
 
-		if (result.hasErrors() || branchDto.getCountryBranch() == null) {
+		if (result.hasErrors() || branchDto.getCountry() == null) {
 			System.out.println(result.getAllErrors());
 			List<Country> countries = countryService.listCountries();
 

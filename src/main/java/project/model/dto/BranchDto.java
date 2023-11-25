@@ -17,7 +17,7 @@ public class BranchDto {
 	@NotBlank(message = "Branch Name is required")
 	private String branchName;
 	
-	private Country countryBranch;
+	private Country country;
 	
 	private String branchType;
 	

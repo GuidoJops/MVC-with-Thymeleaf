@@ -27,6 +27,6 @@ public class Branch {
 	
 	@ManyToOne
 	@JoinColumn (name="country_id")
-	private Country countryBranch;
+	private Country country;
 	
 }

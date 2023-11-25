@@ -24,12 +24,12 @@ public class BranchMapper {
 			return null;
 		}
 
-		String CountryName = branch.getCountryBranch().getName();
+		String CountryName = branch.getCountry().getName();
 		BranchDto branchDto = new BranchDto();
 
 		branchDto.setId(branch.getId());
 		branchDto.setBranchName(branch.getBranchName());
-		branchDto.setCountryBranch(branch.getCountryBranch());
+		branchDto.setCountry(branch.getCountry());
 		branchDto.setBranchType(branchDto.definesBranchType(CountryName));
 
 		System.out.println("Devolviendo DTO...");
@@ -48,7 +48,7 @@ public class BranchMapper {
 		
 		branch.setId(branchDto.getId());
 		branch.setBranchName(branchDto.getBranchName());
-		branch.setCountryBranch(branchDto.getCountryBranch());
+		branch.setCountry(branchDto.getCountry());
 		
 		System.out.println("Devolviendo Entidad...");
 

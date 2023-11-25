@@ -17,12 +17,12 @@
 		<input type="text" th:field="*{branchName}" class="form-control" placeholder="-Enter the Branch Name-">
 		<!--<small class="form-text text-danger" th:if="${#fields.hasErrors('branchName')}" th:errors="*{branchName}"> </small> -->
 
-		<label for="countryBranch">Country:</label>
-		<select th:field="*{countryBranch}" class="form-control" id="countryBranch">
+		<label for="country">Country:</label>
+		<select th:field="*{country}" class="form-control" id="country">
 			<option value=""> -Select Country-</option>
-			<option th:each="countryBranch:${countries}"
-					th:value="${countryBranch.id}"
-					th:text="${countryBranch.name}"></option>
+			<option th:each="country:${countries}"
+					th:value="${country.id}"
+					th:text="${country.name}"></option>
 		</select>
 		<button type="submit" class="btn btn-warning" th:text="${button}" style="margin-top: 20px;"></button>
 
