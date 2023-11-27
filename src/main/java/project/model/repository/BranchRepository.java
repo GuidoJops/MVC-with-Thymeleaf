@@ -5,8 +5,10 @@ import org.springframework.stereotype.Repository;
 
 import project.model.domain.Branch;
 
+import java.util.Optional;
+
 @Repository
 public interface BranchRepository extends JpaRepository<Branch, Long>{
 
-	Branch findBybranchName(String nombre);
+	Branch findByBranchName(String name);
 }

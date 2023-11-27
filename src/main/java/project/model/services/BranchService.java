@@ -11,9 +11,9 @@ public interface BranchService {
 	
 	BranchDto getOneBranchById(Long id);
 	
-	BranchDto getOneBranchByName(String nombre);
+	BranchDto getOneBranchByName(String name);
 	
-	void saveBranch (BranchDto branchDto);
+	boolean saveBranch (BranchDto branchDto);
 	
 	boolean deleteBranchById (Long id);
 	

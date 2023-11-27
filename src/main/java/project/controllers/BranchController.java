@@ -43,7 +43,7 @@ public class BranchController {
 	}
 	
 	@GetMapping("/add")
-	public String showNewBranchForm(@Valid Model model) {
+	public String showNewBranchForm(Model model) {
 		BranchDto branchDto = new BranchDto();
 		List<Country> countries = countryService.listCountries();
 	
@@ -65,7 +65,11 @@ public class BranchController {
 
 		model.addAttribute("title", "Branch found");
 		model.addAttribute("branches", branchDto);
-		return "/views/branches/branches-list";
+		msg.addFlashAttribute("success", "Yes! We know that name.");
+
+//		return "/views/branches/branches-list"; // no me muestra el "msg"
+		return "redirect:/branch"; // con esto me muestra el "msg" pero no el model
+
 
 	}
 
@@ -88,31 +92,40 @@ public class BranchController {
 	private boolean isNumeric(String str) {
 		return str.chars().allMatch( Character::isDigit );
 	}
-	
+
 	@PostMapping("/save")
 	public String saveBranch(@Valid @ModelAttribute BranchDto branchDto,
-								BindingResult result, Model model, RedirectAttributes msg ) {
+							 BindingResult result, Model model, RedirectAttributes msg) {
 
-		if (result.hasErrors() || branchDto.getCountry() == null) {
-			System.out.println(result.getAllErrors());
-			List<Country> countries = countryService.listCountries();
-
-			model.addAttribute("title", "Add Branch");
-			model.addAttribute("button", "Save Branch");
-			model.addAttribute("branch", branchDto);
-			model.addAttribute("countries",countries);
-
-			System.out.println("Errors detected with input data.");
+		//User input Validation
+		if (hasErrorsOrMissingCountry(branchDto, result)) {
+			handleErrors(branchDto, model, msg);
 			msg.addFlashAttribute("error", "Verify that all fields are complete.");
-
 			return "redirect:/branch/add";
 		}
-		
-		branchService.saveBranch(branchDto);
-		System.out.println("Branch has been saved");
-		msg.addFlashAttribute("success", "Branch has been saved successfully");
 
+		//System Validation
+		if (!branchService.saveBranch(branchDto)) {
+			msg.addFlashAttribute("error", "Name already taken.");
+			return "redirect:/branch/add";
+		}
+
+		msg.addFlashAttribute("success", "Branch has been saved successfully");
 		return "redirect:/branch";
+	}
+
+	private boolean hasErrorsOrMissingCountry(BranchDto branchDto, BindingResult result) {
+		return result.hasErrors() || branchDto.getCountry() == null;
+	}
+
+	private void handleErrors(BranchDto branchDto, Model model, RedirectAttributes msg) {
+		List<Country> countries = countryService.listCountries();
+
+		model.addAttribute("title", "Add Branch");
+		model.addAttribute("button", "Save Branch");
+		model.addAttribute("branch", branchDto);
+		model.addAttribute("countries", countries);
+
 	}
 
 	@GetMapping("/edit/{id}")

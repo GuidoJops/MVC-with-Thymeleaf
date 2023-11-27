@@ -25,8 +25,21 @@ public class BranchServiceImpl implements BranchService {
 	}
 
 	@Override
-	public void saveBranch(BranchDto branchDto) {
-		branchRepository.save(branchMapper.dtoToEntity(branchDto));
+	public boolean saveBranch(BranchDto branchDto) {
+		Branch existingBranch = branchRepository.findByBranchName(branchDto.getBranchName());
+
+		if (existingBranch == null || existingBranch.getBranchName() == null) {
+			branchRepository.save(branchMapper.dtoToEntity(branchDto));
+			return true;
+		}
+
+		String branchName = existingBranch.getBranchName();
+		if (branchName.equalsIgnoreCase(branchDto.getBranchName())) {
+			System.out.println("Branch Name already taken.");
+			return false;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -35,8 +48,8 @@ public class BranchServiceImpl implements BranchService {
 	}
 
 	@Override
-	public BranchDto getOneBranchByName(String nombre) {
-		return branchMapper.entityToDto(branchRepository.findBybranchName(nombre));
+	public BranchDto getOneBranchByName(String name) {
+		return branchMapper.entityToDto(branchRepository.findByBranchName(name));
 	}
 
 	@Override
