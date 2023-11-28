@@ -5,61 +5,60 @@
 <style>
 h1 {text-align: center;}
 
+
 </style>
 <body>
-	<header th:replace="~{template/template :: header}"></header>
+<header th:replace="~{template/template :: header}"></header>
 
-	<div class="card">
-		<div class="card-body"
-		
-		><h1 class="text">Branch Management</h1>
-		</div>
-	</div>
+<div class="card">
+    <div class="card-body"
 
-		<div class="card-deck">
-		<div class="card">
-			<img src="/images/view.png" class="card-img-top" alt="" >
-			<div class="card-body">
-				<h5 class="card-title">See Branches</h5>
-				<p class="card-text">View all available Branches.</p>
-				<div class=text-center>
-					<a th:href="@{/branch}"  href="#" class="btn btn-warning">Go!</a>
-				</div>
-			
-			</div>
-		</div>
-		
-		<div class="card">
-			<img src="/images/add.png" class="card-img-top" alt="">
-			<div class="card-body">
-				<h5 class="card-title">Add Branch</h5>
-				<p class="card-text">Add Branch to the system.</p>
-				<div class=text-center>
-					<a th:href="@{/branch/add}" href="#" class="btn btn-primary">Go!</a>
-				</div>
-			</div>
-		</div>
-		
-		<div class="card">
-			<img src="/images/search.png" class="card-img-top" alt="">
-			<div class="card-body">
-				<h5 class="card-title">Search Branch</h5>
-				<p class="card-text">View the data of a specific Branch.</p>
+    ><h1 class="text">Branch Management</h1>
+    </div>
+</div>
 
-				<form class="d-flex" th:action="@{/branch/search}" method="get">
-					<input class="form-control me-2" type="text" name="nameOrId"
-						placeholder="Enter Branch ID or NAME..." >
-					<button class="btn btn-outline-success" type="submit">Search</button>
-			
-				</form>
-			</div>
-		</div>
-	</div>
+<div class="card-deck">
+    <div class="card">
+        <img src="/images/view.png" class="card-img-top" alt="">
+        <div class="card-body">
+            <h5 class="card-title">See Branches</h5>
+            <p class="card-text">View all available Branches.</p>
+            <div class=text-center>
+                <a th:href="@{/branch}" href="#" class="btn btn-warning">Go!</a>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="/images/add.png" class="card-img-top" alt="">
+        <div class="card-body">
+            <h5 class="card-title">Add Branch</h5>
+            <p class="card-text">Add Branch to the system.</p>
+            <div class=text-center>
+                <a th:href="@{/branch/add}" href="#" class="btn btn-primary">Go!</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="/images/search.png" class="card-img-top" alt="">
+        <div class="card-body">
+            <h5 class="card-title">Search Branch</h5>
+            <p class="card-text">View the data of a specific Branch.</p>
+
+            <form class="d-flex" th:action="@{/branch/search}" method="get">
+                <input class="form-control me-2" type="text" name="nameOrId"
+                       placeholder="Enter Branch ID or NAME...">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+
+            </form>
+        </div>
+    </div>
+</div>
 
 
-	<!--
-        <footer th:replace="~{template/template :: footer}"></footer>
-    -->
+<footer th:replace="~{template/template :: footer}"></footer>
 
 </body>
 </html>
