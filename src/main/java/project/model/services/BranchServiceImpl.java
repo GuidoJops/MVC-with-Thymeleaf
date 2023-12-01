@@ -2,6 +2,7 @@ package project.model.services;
 
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +11,7 @@ import project.model.domain.Branch;
 import project.model.dto.BranchDto;
 import project.model.repository.BranchRepository;
 
+@Slf4j
 @Service
 public class BranchServiceImpl implements BranchService {
 	
@@ -28,17 +30,11 @@ public class BranchServiceImpl implements BranchService {
 	public boolean saveBranch(BranchDto branchDto) {
 		Branch existingBranch = branchRepository.findByBranchName(branchDto.getBranchName());
 
-		if (existingBranch == null || existingBranch.getBranchName() == null) {
+		if (shouldSaveBranch(existingBranch, branchDto)) {
 			branchRepository.save(branchMapper.dtoToEntity(branchDto));
 			return true;
 		}
-
-		String branchName = existingBranch.getBranchName();
-		if (branchName.equalsIgnoreCase(branchDto.getBranchName())) {
-			System.out.println("Branch Name already taken.");
-			return false;
-		}
-
+		log.info("Branch Name already taken.");
 		return false;
 	}
 
@@ -49,6 +45,7 @@ public class BranchServiceImpl implements BranchService {
 
 	@Override
 	public BranchDto getOneBranchByName(String name) {
+
 		return branchMapper.entityToDto(branchRepository.findByBranchName(name));
 	}
 
@@ -56,12 +53,21 @@ public class BranchServiceImpl implements BranchService {
 	public boolean deleteBranchById(Long id) {
 		Branch branch = branchRepository.findById(id).orElse(null);
 		if (branch == null) {
-			System.out.println("Branch not found");
+			log.info("Branch not found");
 			return false;
 		}
 		branchRepository.deleteById(id);
-		System.out.println(branch.getBranchName() + " deleted");
+		log.info(branch.getBranchName() + " deleted");
 		return true;
+	}
+
+	private boolean shouldSaveBranch(Branch branch, BranchDto branchdto){
+		return branch == null || branch.getBranchName() == null ||
+				isBranchValid(branch, branchdto);
+	}
+
+	private boolean isBranchValid(Branch existingBranch, BranchDto branchDto) {
+		return existingBranch.getId() > 0 && existingBranch.getBranchName().equalsIgnoreCase(branchDto.getBranchName());
 	}
 
 }

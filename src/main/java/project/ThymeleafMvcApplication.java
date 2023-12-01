@@ -1,13 +1,14 @@
 package project;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.io.InputStream;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -16,8 +17,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import project.model.domain.Country;
 import project.model.services.CountryService;
 
+@Slf4j
 @SpringBootApplication
 public class ThymeleafMvcApplication implements CommandLineRunner {
+
+	private static final String COUNTRIES_PATH = "/json/countries.json";
 
 	@Autowired
 	private CountryService countryService;
@@ -27,38 +31,42 @@ public class ThymeleafMvcApplication implements CommandLineRunner {
 	}
 
 	@Override
-	public void run(String... args) throws Exception {
-		
-		// Load countries into DB from Json file
-		System.out.println("---COUNTRIES LOADER STARTED---\n");
+	public void run(String... args) {
 
+		log.info("---COUNTRIES LOADER STARTED---");
+
+		if (countryService.listCountries().isEmpty()) {
+			try {
+				loadCountriesFromJson();
+			} catch (Exception ex) {
+				log.error("Loading countries from JSON... ERROR!: " + ex.getMessage());
+			}
+		} else {
+			log.info("We are GOOD! Countries have been previously initialized.");
+		}
+
+		log.info("---END OF COUNTRIES LOADER---");
+	}
+
+	private void loadCountriesFromJson() throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
 		TypeReference<List<Country>> typeReference = new TypeReference<List<Country>>() {};
-		InputStream inputStream = TypeReference.class.getResourceAsStream("/json/countries.json");
-		
-		//Confirms whether the countries have been loaded before; if not, proceeds with the loading.
-		if (countryService.listCountries().isEmpty()) {
-			System.out.println("No Country data was found in the system.");
-			System.out.println("Recovering country data.... ");
-			List<Country> countries = mapper.readValue(inputStream, typeReference);
-			
-			//Sort the Countries
-			List<Country> sortedCountries = countries.stream()
-					.sorted(Comparator.comparing(Country::getName))
-					.collect(Collectors.toList());
+		InputStream inputStream = TypeReference.class.getResourceAsStream(COUNTRIES_PATH);
 
-			//Insert List of Countries to the DB
-			countryService.addMultipleCountries(sortedCountries);
-			System.out.println("Done!");
+		List<Country> countries = mapper.readValue(inputStream, typeReference);
+		log.info("Loading countries from JSON... DONE!");
+		saveCountriesIntoDb(countries);
+		log.info("Saving countries into DB... DONE!");
+	}
 
+	private void saveCountriesIntoDb(List<Country> countries) {
+		List<Country> sortedCountries = sortCountriesByName(countries);
+		countryService.addMultipleCountries(sortedCountries);
+	}
 
-		} else {
-			System.out.println("We are GOOD! Countries have been previously initialized.");
-
-		}
-		System.out.println("\n---END OF COUNTRIES LOADER---");
-
-	};
-	
-
+	private List<Country> sortCountriesByName(List<Country> countries) {
+		return countries.stream()
+				.sorted(Comparator.comparing(Country::getName))
+				.toList();
+	}
 }

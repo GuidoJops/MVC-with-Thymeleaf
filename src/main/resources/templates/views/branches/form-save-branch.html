@@ -20,7 +20,10 @@
         <label for="country">Country:</label>
         <select th:field="*{country}" class="form-control" id="country">
             <option value=""> -Select Country-</option>
-            <option th:each="country:${countries}"
+            <th:block th:if="${#lists.isEmpty(countries)}">
+                <option value="" th:text="'Countries failed to load, contact support'"></option>
+            </th:block>
+            <option th:each="country: ${countries}"
                     th:value="${country.id}"
                     th:text="${country.name}"></option>
         </select>

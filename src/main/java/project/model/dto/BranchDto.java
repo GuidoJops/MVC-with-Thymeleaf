@@ -1,7 +1,6 @@
 package project.model.dto;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Set;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -11,6 +10,13 @@ import project.model.domain.Country;
 @Getter
 @Setter
 public class BranchDto {
+
+	private static final Set<String> EU_COUNTRIES = Set.of("Germany", "Austria", "Belgium", "Bulgaria", "Cyprus",
+			"Croatia", "Denmark", "Spain", "Slovakia", "Slovenia",
+			"Estonia", "Finland", "France", "Greece", "Hungary",
+			"Ireland", "Italy", "Latvia", "Lithuania", "Luxembourg",
+			"Malta", "Netherlands", "Poland", "Portugal",
+			"Czech Republic", "Romania", "Sweden");
 	
 	private Long id;
 	
@@ -21,35 +27,12 @@ public class BranchDto {
 	
 	private String branchType;
 	
-	private List<String> euCountries = Arrays.asList("Germany","Austria","Belgium","Bulgaria","Cyprus",
-			"Croatia","Denmark","Spain","Slovakia","Slovenia",
-			"Estonia","Finland","France","Greece","Hungary",
-			"Ireland","Italy","Latvia","Lithuania","Luxembourg",
-			"Malta","Netherlands","Poland","Portugal",
-			"Czech Republic","Romania","Sweden");
-
-	public String definesBranchType(String countryName) {
-		String type="Outside EU";
-		
-		if(euCountrySearch(countryName)) {
-			type= "EU";
-		}
-		return type;
-		 
+	public String definesBranchType() {
+		return isEuCountry() ? "EU" : "Outside EU";
 	}
 
-	public boolean euCountrySearch(String nombrePais) {
-		boolean paisOk = false;
-		int contador= 0;
-		
-		while (contador < euCountries.size() && !paisOk) {
-			if (euCountries.get(contador).equalsIgnoreCase(nombrePais)){
-				paisOk = true;
-			}
-			contador ++;
-		}	
-		return paisOk;
-		
+	public boolean isEuCountry() {
+		return EU_COUNTRIES.contains(country.getName());
 	}
 
 }

@@ -5,8 +5,7 @@ import java.util.List;
 import project.model.dto.BranchDto;
 
 public interface BranchService {
-	
-	
+
 	List<BranchDto> getAllBranches();
 	
 	BranchDto getOneBranchById(Long id);

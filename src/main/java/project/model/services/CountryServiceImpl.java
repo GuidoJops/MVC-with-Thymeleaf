@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import project.model.domain.Country;
 import project.model.repository.CountryRepository;
 
-//Los Paises se cargan automaticamente al iniciar el programa
+//Countries are loaded automatically when program starts.
 
 @Service
 public class CountryServiceImpl implements CountryService {
@@ -23,7 +23,6 @@ public class CountryServiceImpl implements CountryService {
 
 	@Override
 	public void addCountry(Country country) {
-		System.out.println("Country Added");
 		countryRepository.save(country);
 	}
 

@@ -9,51 +9,37 @@ import org.springframework.stereotype.Component;
 import project.model.domain.Branch;
 import project.model.dto.BranchDto;
 
-@Component
 @Getter
 @Setter
+@Component
 public class BranchMapper {
-	
-	private Branch branch;
-	private BranchDto branchDto;
-	
-	
+
+    private Branch branch;
+    private BranchDto branchDto;
+
+	public List<BranchDto> entityToDto(List<Branch> listEntity) {
+		return listEntity.stream().map(this::entityToDto).toList();
+	}
 
 	public BranchDto entityToDto(Branch branch) {
-		if(branch == null) {
-			return null;
-		}
+        if (branch == null) {
+            return null;
+        }
 
-		String CountryName = branch.getCountry().getName();
-		BranchDto branchDto = new BranchDto();
+		branchDto = new BranchDto();
+        branchDto.setId(branch.getId());
+        branchDto.setBranchName(branch.getBranchName());
+        branchDto.setCountry(branch.getCountry());
+        branchDto.setBranchType(branchDto.definesBranchType());
+        return branchDto;
+    }
 
-		branchDto.setId(branch.getId());
-		branchDto.setBranchName(branch.getBranchName());
-		branchDto.setCountry(branch.getCountry());
-		branchDto.setBranchType(branchDto.definesBranchType(CountryName));
+    public Branch dtoToEntity(BranchDto branchDto) {
+		branch = new Branch();
+        branch.setId(branchDto.getId());
+        branch.setBranchName(branchDto.getBranchName());
+        branch.setCountry(branchDto.getCountry());
+        return branch;
+    }
 
-		System.out.println("Devolviendo DTO...");
-
-		return branchDto;
-	}
-	
-	public List<BranchDto> entityToDto(List<Branch> listEntity){
-		System.out.println("Devolviendo Lista DTO...");
-
-		return listEntity.stream().map(x-> entityToDto(x)).toList();
-	}
-	
-	public Branch dtoToEntity(BranchDto branchDto) {
-		Branch branch = new Branch();
-		
-		branch.setId(branchDto.getId());
-		branch.setBranchName(branchDto.getBranchName());
-		branch.setCountry(branchDto.getCountry());
-		
-		System.out.println("Devolviendo Entidad...");
-
-		return branch;
-		
-	}
-	
 }
